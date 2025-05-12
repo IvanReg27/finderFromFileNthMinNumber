@@ -16,8 +16,7 @@ import java.util.Iterator;
 public class XlsxServiceImpl implements XlsxService {
 
     /**
-     * Метод для получения минимального числа из файла
-     *
+     * Метод для поиска минимального числа из файла
      */
     public int findMin(String path) {
         try (FileInputStream fis = new FileInputStream(path);

@@ -7,14 +7,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * Интерфейс для получения пользователем минимального числа из файла
+ * Интерфейс для поиска пользователем минимального числа из файла
  */
 @RequestMapping("/api/xlsx")
 public interface XlsxController {
 
     /**
-     * Метод для получения минимального числа из файла
-     *
+     * Метод для поиска минимального числа из файла
      */
     @Operation(summary = "Найти минимальное число в .xlsx файле")
     @GetMapping("/min")
