@@ -10,7 +10,7 @@
         <relativePath/>
     </parent>
     <groupId>ru.makhorin</groupId>
-    <artifactId>readFromFileMinNumber</artifactId>
+    <artifactId>finderFromFileNthMinNumber</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>

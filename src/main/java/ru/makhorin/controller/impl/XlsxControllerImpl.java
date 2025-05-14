@@ -13,8 +13,9 @@ public class XlsxControllerImpl implements XlsxController {
 
     private final XlsxService xlsxService;
 
-    public ResponseEntity<Integer> getMinNumber(@RequestParam String path) {
-        int min = xlsxService.findMin(path);
-        return ResponseEntity.ok(min);
+    @Override
+    public ResponseEntity<Integer> getNthMinNumber(String path, int n) {
+        int result = xlsxService.findNthMinNumber(path, n);
+        return ResponseEntity.ok(result);
     }
 }

@@ -4,8 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FinderFromFileMinNumberApplication {
+public class FinderFromFileNthMinNumberApplication {
     public static void main(String[] args) {
-        SpringApplication.run(FinderFromFileMinNumberApplication.class, args);
+        SpringApplication.run(FinderFromFileNthMinNumberApplication.class, args);
     }
 }
