@@ -3,9 +3,10 @@ package ru.makhorin.service.impl;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
+import ru.makhorin.algorithm.QuickSelect;
 import ru.makhorin.service.XlsxService;
 
 import java.io.FileInputStream;
@@ -16,14 +17,13 @@ import java.util.List;
 @Service
 public class XlsxServiceImpl implements XlsxService {
 
-    @Override
     public int findNthMinNumber(String path, int n) {
-        List<Integer> numbers = new ArrayList<>();
-
         try (FileInputStream fis = new FileInputStream(path);
              XSSFWorkbook workbook = new XSSFWorkbook(fis)) {
 
-            Sheet sheet = workbook.getSheetAt(0);
+            XSSFSheet sheet = workbook.getSheetAt(0);
+            List<Integer> numbers = new ArrayList<>();
+
             for (Row row : sheet) {
                 Cell cell = row.getCell(0);
                 if (cell != null && cell.getCellType() == CellType.NUMERIC) {
@@ -31,28 +31,17 @@ public class XlsxServiceImpl implements XlsxService {
                 }
             }
 
-            if (numbers.isEmpty()) {
-                throw new IllegalArgumentException("Файл не содержит чисел");
+            if (numbers.size() < n) {
+                throw new IllegalArgumentException("В файле меньше чисел, чем указано");
             }
 
-            if (n <= 0 || n > numbers.size()) {
-                throw new IllegalArgumentException("Некорректное значение N: " + n);
-            }
+            // эффективный алгоритм (применяем свой QuickSelect, средняя сложность алгоритма O(n))
+            int[] arr = numbers.stream().mapToInt(i -> i).toArray();
+            QuickSelect qs = new QuickSelect();
+            return qs.findNthSmallest(arr, n);
 
-            // Сортировка пузырьком
-            for (int i = 0; i < numbers.size() - 1; i++) {
-                for (int j = 0; j < numbers.size() - i - 1; j++) {
-                    if (numbers.get(j) > numbers.get(j + 1)) {
-                        int temp = numbers.get(j);
-                        numbers.set(j, numbers.get(j + 1));
-                        numbers.set(j + 1, temp);
-                    }
-                }
-            }
-
-            return numbers.get(n - 1);
         } catch (IOException e) {
-            throw new RuntimeException("Ошибка при чтении файла: " + e.getMessage(), e);
+            throw new RuntimeException("Ошибка чтения файла", e);
         }
     }
 }
